@@ -1,11 +1,22 @@
 package com.example.apitarefas.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Tarefa {
 
+    @Id
+    @GeneratedValue
     private int id;
     private String titulo;
     private String descricao;
     private boolean concluida;
+
+    public Tarefa() {
+
+    }
 
     public Tarefa(String titulo, String descricao) {
         this.titulo = titulo;
