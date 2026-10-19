@@ -1,5 +1,6 @@
 package com.example.apitarefas.service;
 
+import com.example.apitarefas.model.Tarefa;
 import com.example.apitarefas.repository.TarefaRepository;
 
 public class TarefaService {
@@ -8,5 +9,10 @@ public class TarefaService {
 
     public TarefaService(TarefaRepository tarefaRepository) {
         this.tarefaRepository = tarefaRepository;
+    }
+
+    public Tarefa salvar(Tarefa tarefa){
+
+        return tarefaRepository.save(tarefa);
     }
 }
