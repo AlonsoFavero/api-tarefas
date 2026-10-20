@@ -3,9 +3,11 @@ package com.example.apitarefas.service;
 import com.example.apitarefas.exception.TarefaNotFoundException;
 import com.example.apitarefas.model.Tarefa;
 import com.example.apitarefas.repository.TarefaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
