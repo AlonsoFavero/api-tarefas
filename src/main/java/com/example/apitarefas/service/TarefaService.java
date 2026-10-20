@@ -37,4 +37,15 @@ public class TarefaService {
 
         tarefaRepository.deleteById(id);
     }
+
+    public Tarefa atualizar(Integer id, Tarefa tarefa){
+
+       Tarefa tarefaAtualizada = buscarPorId(id);
+
+        tarefaAtualizada.setTitulo(tarefa.getTitulo());
+        tarefaAtualizada.setDescricao(tarefa.getDescricao());
+        tarefaAtualizada.setConcluida(tarefa.isConcluida());
+
+      return tarefaRepository.save(tarefaAtualizada);
+    }
 }
