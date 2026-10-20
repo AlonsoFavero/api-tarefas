@@ -2,10 +2,7 @@ package com.example.apitarefas.controller;
 
 import com.example.apitarefas.model.Tarefa;
 import com.example.apitarefas.service.TarefaService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +26,11 @@ public class TarefaController {
     public Tarefa buscarPorId(@PathVariable Integer id){
 
         return tarefaService.buscarPorId(id);
+    }
+
+    @PostMapping
+    public Tarefa criar(@RequestBody Tarefa tarefa){
+
+       return tarefaService.salvar(tarefa);
     }
 }
