@@ -28,4 +28,11 @@ public class TarefaService {
 
         return tarefaRepository.findById(id).orElseThrow(() -> new TarefaNotFoundException("tarefa não encontrada"));
     }
+
+    public void excluir(Integer id){
+
+        buscarPorId(id);
+
+        tarefaRepository.deleteById(id);
+    }
 }
