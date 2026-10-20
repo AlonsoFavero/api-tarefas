@@ -1,10 +1,10 @@
 package com.example.apitarefas.service;
 
+import com.example.apitarefas.exception.TarefaNotFoundException;
 import com.example.apitarefas.model.Tarefa;
 import com.example.apitarefas.repository.TarefaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public class TarefaService {
 
@@ -24,8 +24,8 @@ public class TarefaService {
         return tarefaRepository.findAll();
     }
 
-    public Optional<Tarefa> buscarPorId(Integer id){
+    public Tarefa buscarPorId(Integer id){
 
-        return tarefaRepository.findById(id);
+        return tarefaRepository.findById(id).orElseThrow(() -> new TarefaNotFoundException("tarefa não encontrada"));
     }
 }
