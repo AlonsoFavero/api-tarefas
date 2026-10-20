@@ -33,4 +33,10 @@ public class TarefaController {
 
        return tarefaService.salvar(tarefa);
     }
+
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Integer id){
+
+         tarefaService.excluir(id);
+    }
 }
