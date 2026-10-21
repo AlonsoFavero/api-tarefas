@@ -35,4 +35,18 @@ public class TarefaControllerTest {
                         .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
         ).andExpect(status().isOk());
     }
+
+    @Test
+    void deveBuscarTarefaPorId() throws Exception{
+
+        mockMvc.perform(
+                post("/tarefas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
+        ).andExpect(status().isOk());
+
+        mockMvc.perform(
+                get("/tarefas/1")
+        ).andExpect(status().isOk());
+    }
 }
