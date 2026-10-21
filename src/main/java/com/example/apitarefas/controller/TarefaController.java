@@ -39,4 +39,10 @@ public class TarefaController {
 
          tarefaService.excluir(id);
     }
+
+    @PutMapping("/{id}")
+    public Tarefa atualizar(@PathVariable Integer id, @RequestBody Tarefa tarefa){
+
+        return tarefaService.atualizar(id, tarefa);
+    }
 }
