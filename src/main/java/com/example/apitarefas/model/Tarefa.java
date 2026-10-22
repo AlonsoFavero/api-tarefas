@@ -3,6 +3,7 @@ package com.example.apitarefas.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Tarefa {
@@ -10,7 +11,9 @@ public class Tarefa {
     @Id
     @GeneratedValue
     private int id;
+    @NotBlank
     private String titulo;
+    @NotBlank
     private String descricao;
     private boolean concluida;
 

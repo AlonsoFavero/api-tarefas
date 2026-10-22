@@ -143,4 +143,14 @@ public class TarefaControllerTest {
                 delete("/tarefas/999")
         ).andExpect(status().isNotFound());
     }
+
+    @Test
+    void deveRejeitarTarefaSemTitulo() throws Exception{
+
+        mockMvc.perform(
+                post("/tarefas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"\",\"descricao\":\"Praticar testes\"}")
+        ).andExpect(status().isBadRequest());
+    }
 }

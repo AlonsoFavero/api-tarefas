@@ -2,6 +2,7 @@ package com.example.apitarefas.controller;
 
 import com.example.apitarefas.model.Tarefa;
 import com.example.apitarefas.service.TarefaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class TarefaController {
     }
 
     @PostMapping
-    public Tarefa criar(@RequestBody Tarefa tarefa){
+    public Tarefa criar(@Valid @RequestBody Tarefa tarefa){
 
        return tarefaService.salvar(tarefa);
     }
