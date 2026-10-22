@@ -80,14 +80,18 @@ public class TarefaControllerTest {
     @Test
     void deveExcluirTarefa() throws Exception{
 
-        mockMvc.perform(
+      MvcResult resultado =  mockMvc.perform(
                 post("/tarefas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
-        ).andExpect(status().isOk());
+        ).andExpect(status().isOk())
+              .andReturn();
+
+        JsonNode json = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
+        int id = json.get("id").asInt();
 
         mockMvc.perform(
-                delete("/tarefas/1")
+                delete("/tarefas/" + id)
         ).andExpect(status().isOk());
     }
 }
