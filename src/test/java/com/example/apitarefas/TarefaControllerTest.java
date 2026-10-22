@@ -7,6 +7,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.MvcResult;
@@ -69,12 +70,17 @@ public class TarefaControllerTest {
         JsonNode json = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
         int id = json.get("id").asInt();
 
-        mockMvc.perform(
+      MvcResult resultado2 =  mockMvc.perform(
                 put("/tarefas/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"titulo\":\"Estudar Phyton\",\"descricao\":\"Praticar diariamente\"}")
 
-        ).andExpect(status().isOk());
+        ).andExpect(status().isOk())
+              .andReturn();
+
+        JsonNode jsonAtualizado = new ObjectMapper().readTree(resultado2.getResponse().getContentAsString());
+        assertEquals("Estudar Phyton", jsonAtualizado.get("titulo").asText());
+        assertEquals("Praticar diariamente", jsonAtualizado.get("descricao").asText());
     }
 
     @Test
