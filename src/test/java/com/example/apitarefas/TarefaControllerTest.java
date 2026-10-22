@@ -153,4 +153,15 @@ public class TarefaControllerTest {
                         .content("{\"titulo\":\"\",\"descricao\":\"Praticar testes\"}")
         ).andExpect(status().isBadRequest());
     }
+
+    @Test
+    void deveRejeitarTarefaSemDescricao() throws Exception{
+
+
+        mockMvc.perform(
+                post("/tarefas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"\"}")
+        ).andExpect(status().isBadRequest());
+    }
 }
