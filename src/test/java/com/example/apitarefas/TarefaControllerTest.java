@@ -94,4 +94,12 @@ public class TarefaControllerTest {
                 delete("/tarefas/" + id)
         ).andExpect(status().isOk());
     }
+
+    @Test
+    void deveRetornar404QuandoTarefaNaoExiste() throws Exception{
+
+        mockMvc.perform(
+                get("/tarefas/999")
+        ).andExpect(status().isNotFound());
+    }
 }
