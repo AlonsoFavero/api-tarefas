@@ -210,4 +210,15 @@ public class TarefaControllerTest {
 
         ).andExpect(status().isBadRequest());
     }
+
+    @Test
+    void deveRejeitarTituloComEspacosEmBranco() throws Exception{
+
+         mockMvc.perform(
+                        post("/tarefas")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"titulo\":\"   \",\"descricao\":\"Praticar testes\"}")
+                ).andExpect(status().isBadRequest());
+
+    }
 }
