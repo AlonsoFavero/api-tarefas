@@ -52,9 +52,13 @@ public class TarefaControllerTest {
         JsonNode json = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
         int id = json.get("id").asInt();
 
-        mockMvc.perform(
+       MvcResult resultado2 = mockMvc.perform(
                 get("/tarefas/" + id)
-        ).andExpect(status().isOk());
+        ).andExpect(status().isOk())
+               .andReturn();
+        JsonNode jsonAtualizado = new ObjectMapper().readTree(resultado2.getResponse().getContentAsString());
+        assertEquals("Estudar Java", jsonAtualizado.get("titulo").asText());
+        assertEquals("Praticar testes", jsonAtualizado.get("descricao").asText());
     }
 
     @Test
