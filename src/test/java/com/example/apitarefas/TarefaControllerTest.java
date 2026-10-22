@@ -9,6 +9,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.MvcResult;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,20 +41,45 @@ public class TarefaControllerTest {
     @Test
     void deveBuscarTarefaPorId() throws Exception{
 
-        mockMvc.perform(
+      MvcResult resultado = mockMvc.perform(
                 post("/tarefas")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
-        ).andExpect(status().isOk());
+        ).andExpect(status().isOk())
+              .andReturn();
+
+        JsonNode json = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
+        int id = json.get("id").asInt();
 
         mockMvc.perform(
-                get("/tarefas/1")
+                get("/tarefas/" + id)
         ).andExpect(status().isOk());
     }
 
     @Test
     void deveAtualizarTarefa() throws Exception{
 
+       MvcResult resultado =  mockMvc.perform(
+                post("/tarefas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
+        ).andExpect(status().isOk())
+               .andReturn();
+
+        JsonNode json = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
+        int id = json.get("id").asInt();
+
+        mockMvc.perform(
+                put("/tarefas/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"Estudar Phyton\",\"descricao\":\"Praticar diariamente\"}")
+
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    void deveExcluirTarefa() throws Exception{
+
         mockMvc.perform(
                 post("/tarefas")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -59,10 +87,7 @@ public class TarefaControllerTest {
         ).andExpect(status().isOk());
 
         mockMvc.perform(
-                put("/tarefas/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"titulo\":\"Estudar Phyton\",\"descricao\":\"Praticar diariamente\"}")
-
+                delete("/tarefas/1")
         ).andExpect(status().isOk());
     }
 }
