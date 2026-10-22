@@ -122,6 +122,10 @@ public class TarefaControllerTest {
         mockMvc.perform(
                 get("/tarefas/" + id)
         ).andExpect(status().isNotFound());
+
+        mockMvc.perform(
+                get("/tarefas")
+        ).andExpect(status().isOk());
     }
 
     @Test
