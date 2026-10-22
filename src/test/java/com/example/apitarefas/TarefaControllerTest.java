@@ -27,6 +27,21 @@ public class TarefaControllerTest {
         mockMvc.perform(
                 get("/tarefas")
         ).andExpect(status().isOk());
+
+        mockMvc.perform(
+                post("/tarefas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
+        ).andExpect(status().isOk());
+
+        MvcResult resultado = mockMvc.perform(
+                get("/tarefas")
+        ).andExpect(status().isOk())
+                .andReturn();
+
+        JsonNode jsonAtualizado = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
+        assertEquals("Estudar Java", jsonAtualizado.get(0).get("titulo").asText());
+        assertEquals("Praticar testes", jsonAtualizado.get(0).get("descricao").asText());
     }
 
     @Test
