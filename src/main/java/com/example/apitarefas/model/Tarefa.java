@@ -46,4 +46,8 @@ public class Tarefa {
     public void setConcluida(boolean concluida) {
         this.concluida = concluida;
     }
+
+    public int getId(){
+        return id;
+    }
 }
