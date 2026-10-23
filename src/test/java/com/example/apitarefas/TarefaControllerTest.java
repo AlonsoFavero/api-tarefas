@@ -243,4 +243,26 @@ public class TarefaControllerTest {
                         .content("{\"titulo\":\"   \",\"descricao\":\"Praticar diariamente\"}")
         ).andExpect(status().isBadRequest());
     }
+
+    @Test
+    void deveRejeitarAtualizacaoComDescricaoEmBranco() throws Exception{
+
+
+        MvcResult resultado = mockMvc.perform(
+                        post("/tarefas")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
+                ).andExpect(status().isOk())
+                .andReturn();
+
+
+        JsonNode json = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
+        int id = json.get("id").asInt();
+
+        mockMvc.perform(
+                put("/tarefas/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"   \"}")
+        ).andExpect(status().isBadRequest());
+    }
 }
