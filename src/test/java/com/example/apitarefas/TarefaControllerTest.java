@@ -287,4 +287,15 @@ public class TarefaControllerTest {
                         .content("{\"titulo\":\"   \",\"descricao\":\"   \"}")
         ).andExpect(status().isBadRequest());
     }
+
+    @Test
+    void deveRetornar404AoAtualizarTarefaInexistente() throws Exception{
+
+        mockMvc.perform(
+                put("/tarefas/999")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"titulo\":\"Estudar Java \",\"descricao\":\" Praticar Diariamente\"}")
+
+        ).andExpect(status().isNotFound());
+    }
 }
