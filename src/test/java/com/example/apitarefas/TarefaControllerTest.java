@@ -22,28 +22,41 @@ public class TarefaControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void deveListarTarefa() throws Exception{
+    void deveListarTarefa() throws Exception {
 
         mockMvc.perform(
                 get("/tarefas")
         ).andExpect(status().isOk());
 
-        mockMvc.perform(
-                post("/tarefas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
-        ).andExpect(status().isOk());
+        MvcResult resultadoCriacao = mockMvc.perform(
+                        post("/tarefas")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"titulo\":\"Estudar Java\",\"descricao\":\"Praticar testes\"}")
+                ).andExpect(status().isOk())
+                .andReturn();
+
+        JsonNode json = new ObjectMapper().readTree(
+                resultadoCriacao.getResponse().getContentAsString()
+        );
+        int id = json.get("id").asInt();
 
         MvcResult resultado = mockMvc.perform(
-                get("/tarefas")
-        ).andExpect(status().isOk())
+                        get("/tarefas")
+                ).andExpect(status().isOk())
                 .andReturn();
 
         JsonNode jsonAtualizado = new ObjectMapper().readTree(resultado.getResponse().getContentAsString());
-        assertEquals("Estudar Java", jsonAtualizado.get(0).get("titulo").asText());
-        assertEquals("Praticar testes", jsonAtualizado.get(0).get("descricao").asText());
-    }
+        JsonNode tarefaEncontrada = null;
 
+        for (JsonNode tarefa : jsonAtualizado) {
+            if (tarefa.get("id").asInt() == id) {
+                tarefaEncontrada = tarefa;
+            }
+        }
+
+        assertEquals("Estudar Java", tarefaEncontrada.get("titulo").asText());
+        assertEquals("Praticar testes", tarefaEncontrada.get("descricao").asText());
+    }
     @Test
     void deveCriarTarefa() throws Exception{
 
