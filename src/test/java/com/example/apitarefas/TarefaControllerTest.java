@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.MvcResult;
@@ -54,6 +55,7 @@ public class TarefaControllerTest {
             }
         }
 
+        assertNotNull(tarefaEncontrada);
         assertEquals("Estudar Java", tarefaEncontrada.get("titulo").asText());
         assertEquals("Praticar testes", tarefaEncontrada.get("descricao").asText());
     }
