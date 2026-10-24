@@ -1,0 +1,3 @@
+2026-10-24 15:37:03.542662-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_TAREFA" already exists; SQL statement:
+create global temporary table HTE_tarefa(concluida boolean, id integer, rn_ integer not null, descricao varchar(255), titulo varchar(255), primary key (rn_)) transactional [42101-240]
